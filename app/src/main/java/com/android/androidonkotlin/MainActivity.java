@@ -23,6 +23,11 @@ public class MainActivity extends AppCompatActivity {
         plusButton = findViewById ( R.id.button_plus );
         textViewCounter = findViewById ( R.id.text_view_counter );
 
+        counterUpdate(counter);
+
     }
 
+    private  void counterUpdate (int counter){
+        textViewCounter.setText ( String.valueOf ( counter ) );
+    }
 }
