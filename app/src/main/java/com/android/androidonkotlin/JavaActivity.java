@@ -31,44 +31,44 @@ public class JavaActivity extends AppCompatActivity {
 
         textView.setText ( "JAVA" );
 
-        if (savedInstanceState != null && savedInstanceState.containsKey ( "SAVE_JAVA_COUNTER_KEY" )) {//Проверяем то чтото есть на экране, не ровно нулю и проверяем наличее ключа
-            counter = savedInstanceState.getParcelable ( "SAVE_JAVA_COUNTER_KEY" );// сохраняем по ключу implements Parcelable
+        if (savedInstanceState != null && savedInstanceState.containsKey ( "SAVE_JAVA_COUNTER_KEY" )) {
+            counter = savedInstanceState.getParcelable ( "SAVE_JAVA_COUNTER_KEY" );
         } else {
-            counter = new JavaCounter ( "counter", 0 );// иницализация переменной счетчика
+            counter = new JavaCounter ( "counter", 0 );
         }
 
-        counterUpdate();
+        counterUpdate ();
 
         minusButton.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View v) {
                 counter.decrement ();
-                counterUpdate();
+                counterUpdate ();
             }
         } );
 
         plusButton.setOnClickListener ( v -> {
             counter.increment ();
-            counterUpdate();
+            counterUpdate ();
         } );
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelable (SAVE_JAVA_COUNTER_KEY, counter);
+        outState.putParcelable ( SAVE_JAVA_COUNTER_KEY, counter );
         super.onSaveInstanceState ( outState );
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        if (savedInstanceState.containsKey(SAVE_JAVA_COUNTER_KEY)) {
-            counter = savedInstanceState.getParcelable (SAVE_JAVA_COUNTER_KEY);
+        if (savedInstanceState.containsKey ( SAVE_JAVA_COUNTER_KEY )) {
+            counter = savedInstanceState.getParcelable ( SAVE_JAVA_COUNTER_KEY );
         }
-        counterUpdate();
+        counterUpdate ();
         super.onRestoreInstanceState ( savedInstanceState );
     }
 
-    private  void counterUpdate (){
+    private void counterUpdate() {
         textViewCounter.setText ( String.valueOf ( counter.getCounter () ) );
     }
 }

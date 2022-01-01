@@ -18,7 +18,7 @@ class KotlinActivity : AppCompatActivity() {
     private lateinit var textViewCounter: TextView
     private lateinit var textView: TextView
 
-    private var counter = 0
+    private lateinit var counter: KotlinCounter
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,35 +32,46 @@ class KotlinActivity : AppCompatActivity() {
 
         textView.text = "KOTLIN"
 
-        counterUpdate(counter)
+        if (savedInstanceState != null && savedInstanceState.containsKey("SAVE_JAVA_COUNTER_KEY")) {
+            counter = savedInstanceState.getParcelable("SAVE_JAVA_COUNTER_KEY")!!
+        } else {
+            counter = KotlinCounter("counter", 0)
+        }
+
+        counterUpdate()
 
         minusButton.setOnClickListener {
-            counterUpdate(--counter)
+            counter.decrement()
+            counterUpdate()
         }
 
         plusButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                counterUpdate(++counter)
+                counter.increment()
+                counterUpdate()
             }
         })
     }
 
-    private fun counterUpdate(counter: Int) {
-        textViewCounter.text = counter.toString()
+    private fun counterUpdate() {
+        textViewCounter.text = counter.counter.toString()
     }
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-        outState.putInt(SAVE_KOTLIN_COUNTER_KEY, counter)
+        outState.putInt(SAVE_KOTLIN_COUNTER_KEY, counter.counter)
 
-        Log.d(TAG, "onSaveInstanceState() called with: outState = $outState, outPersistentState = $outPersistentState")
+        Log.d(
+            TAG,
+            "onSaveInstanceState() called with: outState = $outState, outPersistentState = $outPersistentState"
+        )
         super.onSaveInstanceState(outState, outPersistentState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         if (savedInstanceState.containsKey(SAVE_KOTLIN_COUNTER_KEY)) {
-            counter = savedInstanceState.getInt(SAVE_KOTLIN_COUNTER_KEY)
+            counter = savedInstanceState.getParcelable(SAVE_KOTLIN_COUNTER_KEY)!!
         }
-        counterUpdate(counter)
+        counterUpdate()
 
         Log.d(TAG, "onRestoreInstanceState() called with: savedInstanceState = $savedInstanceState")
         super.onRestoreInstanceState(savedInstanceState)
