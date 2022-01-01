@@ -23,8 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         kotlinButton = findViewById(R.id.button_kotlin)
         kotlinButton.setOnClickListener(View.OnClickListener { view: View? ->
-            val intent = Intent(this@MainActivity, KotlinActivity::class.java)
-            startActivity(intent)
+            KotlinActivity.launch(kotlinButton.context)
         })
     }
 }

@@ -1,6 +1,8 @@
 package com.android.androidonkotlin
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import android.os.Bundle
@@ -65,6 +67,11 @@ class KotlinActivity : AppCompatActivity() {
     }
 
     companion object {
+        fun launch(context: Context) {
+            val intent = Intent(context, KotlinActivity::class.java)
+            context.startActivity(intent)
+        }
+
         private const val SAVE_KOTLIN_COUNTER_KEY = "save_kotlin_counter_key"
         private const val TAG = "@@@ KOTLIN"
     }
