@@ -17,7 +17,7 @@ public class JavaActivity extends AppCompatActivity {
     private TextView textViewCounter = null;
     private TextView textView = null;
 
-    private int counter = 0;
+    private JavaCounter counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,35 +31,44 @@ public class JavaActivity extends AppCompatActivity {
 
         textView.setText ( "JAVA" );
 
-        counterUpdate(counter);
+        if (savedInstanceState != null && savedInstanceState.containsKey ( "SAVE_JAVA_COUNTER_KEY" )) {//Проверяем то чтото есть на экране, не ровно нулю и проверяем наличее ключа
+            counter = savedInstanceState.getParcelable ( "SAVE_JAVA_COUNTER_KEY" );// сохраняем по ключу implements Parcelable
+        } else {
+            counter = new JavaCounter ( "counter", 0 );// иницализация переменной счетчика
+        }
+
+        counterUpdate();
 
         minusButton.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View v) {
-                counterUpdate ( --counter );
+                counter.decrement ();
+                counterUpdate();
             }
         } );
 
-        plusButton.setOnClickListener ( v ->
-                counterUpdate ( ++counter ) );
+        plusButton.setOnClickListener ( v -> {
+            counter.increment ();
+            counterUpdate();
+        } );
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putInt(SAVE_JAVA_COUNTER_KEY, counter);
+        outState.putParcelable (SAVE_JAVA_COUNTER_KEY, counter);
         super.onSaveInstanceState ( outState );
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         if (savedInstanceState.containsKey(SAVE_JAVA_COUNTER_KEY)) {
-            counter = savedInstanceState.getInt(SAVE_JAVA_COUNTER_KEY);
+            counter = savedInstanceState.getParcelable (SAVE_JAVA_COUNTER_KEY);
         }
-        counterUpdate(counter);
+        counterUpdate();
         super.onRestoreInstanceState ( savedInstanceState );
     }
 
-    private  void counterUpdate (int counter){
-        textViewCounter.setText ( String.valueOf ( counter ) );
+    private  void counterUpdate (){
+        textViewCounter.setText ( String.valueOf ( counter.getCounter () ) );
     }
 }
