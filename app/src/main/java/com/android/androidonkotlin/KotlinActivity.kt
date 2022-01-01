@@ -11,6 +11,7 @@ class KotlinActivity : AppCompatActivity() {
     private lateinit var minusButton: Button
     private lateinit var plusButton: Button
     private lateinit var textViewCounter: TextView
+    private lateinit var textView: TextView
 
     private var counter = 0
 
@@ -21,6 +22,9 @@ class KotlinActivity : AppCompatActivity() {
         minusButton = findViewById(R.id.button_minus)
         plusButton = findViewById(R.id.button_plus)
         textViewCounter = findViewById(R.id.text_view_counter)
+        textView = findViewById(R.id.text_view)
+
+        textView.text = "KOTLIN"
 
         counterUpdate(counter)
 

@@ -12,6 +12,7 @@ public class JavaActivity extends AppCompatActivity {
     private Button minusButton = null;
     private Button plusButton = null;
     private TextView textViewCounter = null;
+    private TextView textView = null;
 
     private int counter = 0;
 
@@ -23,6 +24,9 @@ public class JavaActivity extends AppCompatActivity {
         minusButton = findViewById ( R.id.button_minus );
         plusButton = findViewById ( R.id.button_plus );
         textViewCounter = findViewById ( R.id.text_view_counter );
+        textView = findViewById ( R.id.text_view );
+
+        textView.setText ( "JAVA" );
 
         counterUpdate(counter);
 
